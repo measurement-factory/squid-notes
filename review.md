@@ -195,25 +195,23 @@ Cleanup action:
 A reviewer should prioritize (re)reviewing pull requests already awaiting his
 or her review (`review-requested:@me`). Among those pull requests, the
 reviewer should process the PR corresponding to the first matching condition
-below:
+below (the rule links show matching PRs in the Squid code repository):
 
 1. the oldest pull request labeled `review-1` --
-   `label:review-1 review-requested:@me sort:created-asc`
+   [`label:review-1 review-requested:@me sort:created-asc`](https://github.com/squid-cache/squid/pulls?q=label%3Areview-1+review-requested%3A%40me+sort%3Acreated-asc)
 1. the oldest pull request labeled `review-2` --
-   `label:review-2 review-requested:@me sort:created-asc`
+   [`label:review-2 review-requested:@me sort:created-asc`](https://github.com/squid-cache/squid/pulls?q=label%3Areview-2+review-requested%3A%40me+sort%3Acreated-asc)
 1. the oldest pull request labeled `review-3` --
-   `label:review-3 review-requested:@me sort:created-asc`
+   [`label:review-3 review-requested:@me sort:created-asc`](https://github.com/squid-cache/squid/pulls?q=label%3Areview-3+review-requested%3A%40me+sort%3Acreated-asc)
 1. the oldest pull request --
-   `review-requested:@me sort:created-asc`
-
-FIXME: Make these links.
+   [`review-requested:@me sort:created-asc`](https://github.com/squid-cache/squid/pulls?q=review-requested%3A%40me+sort%3Acreated-asc)
 
 Once the reviewer submits their review or comment, they should select the next
 candidate using the same procedure. Note that the set of awaiting pull
 requests and/or PR labels may change during the review.
 
 When no pull requests await the reviewer, he or she should process the oldest
-pull request of interest to them (if any) -- `is:open sort:created-asc`.
+pull request of interest to them (if any) -- [`is:open sort:created-asc`](https://github.com/squid-cache/squid/pulls?q=is%3Aopen+sort%3Acreated-asc).
 
 Reviewer R who wants to stop a PR from being merged until they review it
 should self-request a review of that PR using GitHub's "request PR review"
