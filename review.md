@@ -81,10 +81,6 @@ For curated references related to code reviews see, for example,
 [elsewhere](https://github.com/joho/awesome-code-review).
 
 
-TODO: We should also adjust and adopt https://www.contributor-covenant.org/ or
-a similar covenant.
-
-
 ### Pull request cleanup
 
 The table below partially illustrates the cleanup decision space by

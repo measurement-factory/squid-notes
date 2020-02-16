@@ -11,3 +11,6 @@ please state so explicitly and explain why you feel that way.
 
 * [Review principles](/review.md)
 * [Architecture rules of thumb](/architecture.md)
+
+TODO: Also addjust and adopt https://www.contributor-covenant.org/ or
+a similar covenant.
