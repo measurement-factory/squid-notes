@@ -19,16 +19,18 @@ positives outweigh the negatives, necessitating judgment calls.
 
 <a name="p2"></a>**p2**: Acceptable (in principle) pull requests that can be
 cleaned up should be cleaned up. Squid lacks an army of developers that can
-quickly clean up after drive-by shooters. In most cases, cleanup should happen
-before the pull request goes in. This may, unfortunately, delay pull request
-merging, especially if the primary author is unwilling or unable to improve
-their work. The alternative is worse though: Letting developers "clean things
-up later" results in codebase degeneration. Good developers usually tolerate
-(and some crazy ones even welcome!) easy cleanup suggestions. Good reviewers
-usually stay away from suggesting difficult changes unnecessary for merging
-the PR. These two extreme cases are rarely a problem. The "Pull request
-cleanup" section classifies all cleanup cases and, where possible, prescribes
-their treatment.
+quickly clean up dirty PRs, but even the behemoths that have enough resources
+[require
+cleanup](https://github.com/google/eng-practices/blob/master/review/reviewer/pushback.md#cleaning-it-up-later-later)
+before most pull requests go in. Cleanup may, unfortunately, delay pull
+request merging, especially if the primary author is unwilling or unable to
+improve their work. The alternative is worse though: Letting developers "clean
+things up later" results in codebase degeneration. Good developers usually
+tolerate (and some crazy ones even welcome!) easy cleanup suggestions. Good
+reviewers usually stay away from suggesting difficult changes unnecessary for
+merging the PR. These two extreme cases are rarely a problem. The "Pull
+request cleanup" section classifies all cleanup cases and, where possible,
+prescribes their treatment.
 
 <a name="p3"></a>**p3**: Facts overrule opinions and personal preferences.
 
