@@ -155,8 +155,7 @@ a capable developer is likely to spend on addressing the problem:
   is likely to be accepted as a stand-alone PR; or noticeably increases PR
   risks. Examples may include replacing 100 sequential `if` statements and
   offset increments with an incremental parser for a new protocol/language;
-  adding SMP support to a state-rich legacy feature; enhancing a
-  `NULL`-replacing script to automatically rewrap touched lines.
+  adding SMP support to a state-rich legacy feature.
 
 Cleanup action:
 
