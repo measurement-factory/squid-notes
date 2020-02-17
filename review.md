@@ -81,7 +81,7 @@ engineering.
 
 
 <a name="rp6"></a>rp6: If no other rule applies, then the reviewer may ask the
-author to be consistent with what is in the current codebase.
+author to be consistent with what is in the current codebase
 ----
 
 Unfortunately, finding consistency in Squid code or, more importantly,
