@@ -8,7 +8,7 @@ Squid Project specifics.
   https://google.github.io/eng-practices/review/reviewer/standard.html
   "Google's Standard of Code Review"
 
-<a name="p1"></a>p1: Pull requests that improve at least one area without
+<a name="rp1"></a>rp1: Pull requests that improve at least one area without
 making things worse elsewhere should be accepted (in principle)
 ----
 
@@ -22,7 +22,7 @@ maintenance, deployment, interoperability, and legal concerns. In most cases,
 apples-to-oranges comparisons make it impossible to formally prove that the
 positives outweigh the negatives, necessitating judgment calls.
 
-<a name="p2"></a>p2: Acceptable (in principle) pull requests that can be
+<a name="rp2"></a>rp2: Acceptable (in principle) pull requests that can be
 cleaned up should be cleaned up
 ----
 
@@ -43,17 +43,17 @@ treatment.
   "Google's 'Cleaning It Up Later' discussion"
 
 
-<a name="p3"></a>p3: Reserved for future use
+<a name="rp3"></a>rp3: Reserved for future use
 ----
 
 
-<a name="p4"></a>p4: On matters of style, the [Style Guide] is the authority
+<a name="rp4"></a>rp4: On matters of style, the [Style Guide] is the authority
 ----
 
 Styling not covered by the Guide (or covered by the currently conflicting
 Guide requirements) is a matter of personal preference. Personal choices
 should still be consistent with the committed code, especially with similar
-committed code (but [p6](#p6) caveats often apply here as well). In gray area
+committed code (but [rp6](#rp6) caveats often apply here as well). In gray area
 styling cases, the author’s style should be accepted.
 
 [Style Guide]:
@@ -66,7 +66,7 @@ defining nearly all formatting aspects. However, insisting on that ideal is
 premature until Squid auto-formatting tools become more comprehensive and
 developer-friendly.
 
-<a name="p5"></a>p5: Quality software is designed on solid engineering
+<a name="rp5"></a>rp5: Quality software is designed on solid engineering
 principles
 ----
 
@@ -80,7 +80,7 @@ Otherwise, the choice is dictated by the well-known principles of software
 engineering.
 
 
-<a name="p6"></a>p6: If no other rule applies, then the reviewer may ask the
+<a name="rp6"></a>rp6: If no other rule applies, then the reviewer may ask the
 author to be consistent with what is in the current codebase.
 ----
 
@@ -96,7 +96,7 @@ insisting on "their way" if more experienced Squid developers agree on what
 experienced Squid developers often themselves disagree on that definition.
 
 
-<a name="p7"></a>p7: Reviewers should initiate new and update old reviews in
+<a name="rp7"></a>rp7: Reviewers should initiate new and update old reviews in
 the right order
 ----
 
@@ -119,7 +119,7 @@ resources to consistently provide same-day or even same-week reviews, we can
 assure steady non-discriminatory Project-wide progress.
 
 
-<a name="p8"></a>p8: Reviewers should follow well-known general code review
+<a name="rp8"></a>rp8: Reviewers should follow well-known general code review
 practices
 ----
 
@@ -128,7 +128,7 @@ See, for example, [How to write code review comments].
 [How to write code review comments]:
   https://google.github.io/eng-practices/review/reviewer/comments.html
 
-<a name="p9"></a>p9: Authors should follow well-known general code submission
+<a name="rp9"></a>rp9: Authors should follow well-known general code submission
 practices
 ----
 
