@@ -1,4 +1,4 @@
-### Review principles
+# Review principles
 
 The following principles are based on well-known peer review practices such as
 those published by [Google]. They have been adjusted to better accommodate
@@ -8,91 +8,128 @@ Squid Project specifics.
   https://google.github.io/eng-practices/review/reviewer/standard.html
   "Google's Standard of Code Review"
 
-<a name="p1"></a>**p1**: Pull requests that improve at least one area without
-making things worse elsewhere should be accepted (in principle). In its pure
-form, this basic principle is rarely applicable because accepting any pull
-request has its costs -- even the best PRs usually add new code that will need
-to be maintained long-term and require short-term resource spending on review,
-testing, change log adjustments, backporting, etc. A reviewer must carefully
-assess PR's positive and negative sides, considering not just the code being
-modified but the entire Squid code base as well as Squid maintenance,
-deployment, interoperability, and legal concerns. In most cases,
+<a name="p1"></a>p1: Pull requests that improve at least one area without
+making things worse elsewhere should be accepted (in principle)
+----
+
+In its pure form, this basic principle is rarely applicable because accepting
+any pull request has its costs -- even the best PRs usually add new code that
+will need to be maintained long-term and require short-term resource spending
+on review, testing, change log adjustments, backporting, etc. A reviewer must
+carefully assess PR's positive and negative sides, considering not just the
+code being modified but the entire Squid code base as well as Squid
+maintenance, deployment, interoperability, and legal concerns. In most cases,
 apples-to-oranges comparisons make it impossible to formally prove that the
 positives outweigh the negatives, necessitating judgment calls.
 
-<a name="p2"></a>**p2**: Acceptable (in principle) pull requests that can be
-cleaned up should be cleaned up. Squid lacks an army of developers that can
-quickly clean up dirty PRs, but even the behemoths with enough resources
-[require cleanup] before most pull requests go in. Cleanup may, unfortunately,
-delay pull request merging, especially if the primary author is unwilling or
-unable to improve their work. The alternative is worse though: Letting
-developers "clean things up later" results in codebase degeneration. Good
-developers usually tolerate (and some crazy ones even welcome!) easy cleanup
-suggestions. Good reviewers usually stay away from suggesting difficult
-changes unnecessary for merging the PR. These two extreme cases are rarely a
-problem. The "Pull request cleanup" section classifies all cleanup cases and,
-where possible, prescribes their treatment.
+<a name="p2"></a>p2: Acceptable (in principle) pull requests that can be
+cleaned up should be cleaned up
+----
+
+Squid lacks an army of developers that can quickly clean up dirty PRs, but
+even the behemoths with enough resources [require cleanup] before most pull
+requests go in. Cleanup may, unfortunately, delay pull request merging,
+especially if the primary author is unwilling or unable to improve their work.
+The alternative is worse though: Letting developers "clean things up later"
+results in codebase degeneration. Good developers usually tolerate (and some
+crazy ones even welcome!) easy cleanup suggestions. Good reviewers usually
+stay away from suggesting difficult changes unnecessary for merging the PR.
+These two extreme cases are rarely a problem. The "Pull request cleanup"
+section classifies all cleanup cases and, where possible, prescribes their
+treatment.
 
 [require cleanup]:
   https://github.com/google/eng-practices/blob/master/review/reviewer/pushback.md#cleaning-it-up-later-later
   "Google's 'Cleaning It Up Later' discussion"
 
-<a name="p3"></a>**p3**: Facts overrule opinions and personal preferences.
 
-<a name="p4"></a>**p4**: On matters of style, the Style Guide (and the
-official auto-formatting tools) is the authority. Styling not covered by the
-Guide (or covered by currently conflicting Guide requirements) is a matter of
-personal preference. Personal choices should still be consistent with the
-committed code, especially with similar committed code. In gray area cases,
-the author’s style should be accepted. Ideally, accepted code should need no
-auto-reformatting.
+<a name="p3"></a>p3: Facts overrule opinions and personal preferences
+----
 
-<a name="p5"></a>**p5**: Quality software is designed on solid engineering
-principles rather than just personal preferences. Pull requests should be
-weighed on those principles. While there are usually many ways to make the
-code "work" in a given environment, non-trivial development tasks often have
-very few correct design- or architecture-level solutions. If the author can
-demonstrate (based on solid engineering principles) that several approaches
-are equally valid, then the reviewer should accept the solution preferred by
-the author. Otherwise the choice is dictated by well-known principles of
-software engineering.
 
-<a name="p6"></a>**p6**: If no other rule applies, then the reviewer may ask
-the author to be consistent with what is in the current codebase.
+<a name="p4"></a>p4: On matters of style, the [Style Guide] is the authority
+----
 
-<a name="p7"></a>**p7**: To ensure steady Squid development progress, the
-reviewer should initiate new and update old reviews in the right order (as
-detailed in the "Pull request review order" section below) even if doing so
-delays new code submissions (by that reviewer) and/or delays the initial
-review of newly submitted pull requests. The Squid Project optimizes for the
-speed at which its team of developers can move Squid forward, as opposed to
-optimizing for the speed at which any individual developer can commit code.
-The speed of individual development is important; it’s just not as important
-as the velocity of the entire team. Slow reviews are well-known to reduce
-overall project velocity, cause developer protests/exodus, and even decrease
-the overall quality of the codebase by discouraging code cleanups,
-refactorings, and further improvements to existing pull requests. While the
-Squid Project does not have enough resources to consistently provide same-day
-or even same-week reviews, we can assure steady non-discriminatory
-Project-wide progress.
+Styling not covered by the Guide (or covered by the currently conflicting
+Guide requirements) is a matter of personal preference. Personal choices
+should still be consistent with the committed code, especially with similar
+committed code, but finding consistency in Squid code or, more importantly,
+agreeing which code should be considered in that search is difficult. In gray
+area cases, the author’s style should be accepted.
 
-<a name="p8"></a>**p8**: Reviewers should follow well-known general code
-review practices such as [How to write code review comments].
+[Style Guide]:
+  https://wiki.squid-cache.org/SquidCodingGuidelines
+  "contains, among other things, code styling requirements"
+
+Ideally, accepted code should need no auto-reformatting, and official
+auto-formatting can be considered to be an implicit part of the Style Guide,
+defining nearly all formatting aspects. However, insisting on that ideal is
+premature until Squid auto-formatting tools become more comprehensive and
+developer-friendly.
+
+<a name="p5"></a>p5: Quality software is designed on solid engineering
+principles
+----
+
+Pull requests should be weighed on those principles, regardless of personal
+preferences. While there are usually many ways to make the code "work" in a
+given environment, non-trivial development tasks often have very few correct
+design- or architecture-level solutions. If the author can demonstrate (based
+on solid engineering principles) that several approaches are equally valid,
+then the reviewer should accept the solution preferred by the author.
+Otherwise, the choice is dictated by the well-known principles of software
+engineering.
+
+
+<a name="p6"></a>p6: If no other rule applies, then the reviewer may ask the
+author to be consistent with what is in the current codebase.
+----
+
+
+<a name="p7"></a>p7: Reviewers should initiate new and update old reviews in
+the right order
+----
+
+The order itself is detailed in the "Pull request review order" section
+further below.
+
+This rule ensures steady Squid development progress even though following the
+correct order may delay new code submissions (by that reviewer) and/or delay
+the initial review of newly submitted pull requests. The Squid Project
+optimizes for the speed at which its virtual team of developers, as a whole,
+can move Squid forward, as opposed to optimizing for the speed at which any
+individual developer can commit code. The speed of individual development is
+important; it’s just not as important as the velocity of the entire team.
+
+Slow reviews are well-known to reduce overall project velocity, cause
+developer protests/exodus, and even decrease the overall quality of the
+codebase by discouraging code cleanups, refactorings, and further improvements
+to existing pull requests. While the Squid Project does not have enough
+resources to consistently provide same-day or even same-week reviews, we can
+assure steady non-discriminatory Project-wide progress.
+
+
+<a name="p8"></a>p8: Reviewers should follow well-known general code review
+practices
+----
+
+See, for example, [How to write code review comments].
 
 [How to write code review comments]:
   https://google.github.io/eng-practices/review/reviewer/comments.html
 
-<a name="p9"></a>**p9**: Authors should follow well-known general code
-submission practices such as [Author’s guide to getting through code review].
+<a name="p9"></a>p9: Authors should follow well-known general code submission
+practices
+----
+
+See, for example, [Author’s guide to getting through code review].
 
 [Author’s guide to getting through code review]:
   https://google.github.io/eng-practices/review/developer/
 
-For curated references related to code reviews see, for example,
-[elsewhere](https://github.com/joho/awesome-code-review).
 
-
-### Pull request cleanup
+<a name="cleanup"></a>Pull request cleanup
+----
 
 The table below partially illustrates the cleanup decision space by
 highlighting two key dimensions: the importance of the problem versus the
@@ -183,7 +220,8 @@ Cleanup action:
   real-time conversation may work better than continuing exchanging GitHub
   comments.
 
-#### Who should clean up?
+
+## Who should clean up?
 
 Most cleanup changes should be done by the PR author. There are two notable
 exceptions:
@@ -222,7 +260,9 @@ and might interfere with the pending reviewer fixes. Again, there is usually
 no need to force-push because the Squid Project currently automatically
 rebases and squashes all PR branch commits while merging those changes.
 
-### Pull request review order
+
+<a name="order"></a>Pull request review order
+====
 
 A reviewer should prioritize (re)reviewing pull requests already awaiting his
 or her review (`review-requested:@me`). Among those pull requests, the
@@ -289,3 +329,9 @@ that are no longer waiting for that reviewer.
 
 When all reviews happen on a reasonable schedule, these experimental PR labels
 are not be needed at all!
+
+
+# See also
+
+For a collection of curated references related to code reviews see, for
+example, [elsewhere](https://github.com/joho/awesome-code-review).
