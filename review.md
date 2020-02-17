@@ -161,25 +161,7 @@ a capable developer is likely to spend on addressing the problem:
 
 Cleanup action:
 
-* _fix_: The PR should be changed, using reviewer suggestions as guidance and adjusting them as needed. Most changes should be done by PR author. There are two notable exceptions:
-  * _Uncontroversial_ changes that are easier for the reviewer to apply than
-    to request: If the author allowed PR branch modification (allow-PR-changes
-    is a GitHub default that can be overwritten by the author when opening a
-    new PR), then the reviewer should apply those changes instead of
-    requesting them. This saves everybody time. Most of these changes fall
-    into the "easy" category (but many "easy" fixes, especially those for
-    critical and serious problems are not like that). Authors are responsible
-    for verifying and have the right to reverse reviewer changes, of course.
-    FIXME: Etiquette for squashing/creating new commits.
-  * Changes that the author agrees with (in principle) but does not have
-    enough time or desire to apply. The PR remains blocked, waiting for
-    another developer to implement the requested changes. A reviewer may be
-    that developer, but they do not have to volunteer to apply such changes or
-    commit to a specific delivery timeline. The author (not the reviewer) is
-    ultimately responsible for advancing the PR at this stage (e.g., by
-    finding somebody who can apply the requested changes). The Squid Project
-    does not currently have a policy for closing PRs that wait for a long
-    time, but such a timeout policy may be introduced retroactively.
+* _fix_: The PR should be changed, using reviewer suggestions as guidance and adjusting them as needed. See the "Who should clean up?" section below for a related discussion.
 
 * _TODO_: If the author prefers not to implement the changes (that both
   reviewer and author agree fall under this TODO action), the author can just
@@ -189,6 +171,45 @@ Cleanup action:
   or add a TODO comment. If no agreement is in sight after a few iterations, a
   real-time conversation may work better than continuing exchanging GitHub
   comments.
+
+#### Who should clean up?
+
+Most cleanup changes should be done by the PR author. There are two notable
+exceptions:
+
+* _Uncontroversial_ changes that are easier for the reviewer to apply than to
+  request: If the author has allowed PR branch modification (allow-PR-changes
+  is a GitHub default that can be overwritten by the author when opening a new
+  PR), then the reviewer should apply such changes instead of requesting them.
+  This approach saves everybody time. Reviewers ought to be conservative when
+  classifying changes as uncontroversial; most of such changes fall into the
+  "easy" category (but many "easy" fixes, especially those for critical and
+  serious problems are not like that). It is always best to make one change
+  per commit. Authors are responsible for verifying all (and have the absolute
+  right to reverse any) reviewer changes, of course -- the PR branch belongs
+  to the author.
+
+* Changes that the author does not disagree with (in principle) but does not
+  have enough time or desire to enact. The PR remains blocked, waiting for
+  another developer to implement the requested changes. A reviewer may be that
+  developer, but they do not have to volunteer to apply such changes or commit
+  to a specific delivery timeline. The author (not the reviewer) is ultimately
+  responsible for advancing the PR at this stage (e.g., by finding somebody
+  else who can apply the requested changes). The Squid Project does not
+  currently have a policy for closing PRs that wait for a long time, but such
+  a timeout policy may be introduced retroactively.
+
+To preserve author's ability to restore their branch to the author-desired
+state, reviewers shall not force-push into PR branches (unless each push is
+sanctioned by the author). Fortunately, there is usually no need to force-push
+because the Squid Project currently automatically rebases and squashes all PR
+branch commits while merging those changes; adding a few housekeeping or even
+buggy commits is not a problem.
+
+Authors should minimize force-pushing during review because it confuses GitHub
+and might interfere with the pending reviewer fixes. Again, there is usually
+no need to force-push because the Squid Project currently automatically
+rebases and squashes all PR branch commits while merging those changes.
 
 ### Pull request review order
 
