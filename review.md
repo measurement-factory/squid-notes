@@ -43,7 +43,7 @@ treatment.
   "Google's 'Cleaning It Up Later' discussion"
 
 
-<a name="p3"></a>p3: Facts overrule opinions and personal preferences
+<a name="p3"></a>p3: Reserved for future use
 ----
 
 
