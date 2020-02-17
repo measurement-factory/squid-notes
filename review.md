@@ -1,9 +1,12 @@
 ### Review principles
 
 The following principles are based on well-known peer review practices such as
-those published by
-[Google](https://google.github.io/eng-practices/review/reviewer/standard.html).
-They have been adjusted to better accommodate Squid Project specifics.
+those published by [Google]. They have been adjusted to better accommodate
+Squid Project specifics.
+
+[Google]:
+  https://google.github.io/eng-practices/review/reviewer/standard.html
+  "Google's Standard of Code Review"
 
 <a name="p1"></a>**p1**: Pull requests that improve at least one area without
 making things worse elsewhere should be accepted (in principle). In its pure
@@ -19,18 +22,20 @@ positives outweigh the negatives, necessitating judgment calls.
 
 <a name="p2"></a>**p2**: Acceptable (in principle) pull requests that can be
 cleaned up should be cleaned up. Squid lacks an army of developers that can
-quickly clean up dirty PRs, but even the behemoths that have enough resources
-[require
-cleanup](https://github.com/google/eng-practices/blob/master/review/reviewer/pushback.md#cleaning-it-up-later-later)
-before most pull requests go in. Cleanup may, unfortunately, delay pull
-request merging, especially if the primary author is unwilling or unable to
-improve their work. The alternative is worse though: Letting developers "clean
-things up later" results in codebase degeneration. Good developers usually
-tolerate (and some crazy ones even welcome!) easy cleanup suggestions. Good
-reviewers usually stay away from suggesting difficult changes unnecessary for
-merging the PR. These two extreme cases are rarely a problem. The "Pull
-request cleanup" section classifies all cleanup cases and, where possible,
-prescribes their treatment.
+quickly clean up dirty PRs, but even the behemoths with enough resources
+[require cleanup] before most pull requests go in. Cleanup may, unfortunately,
+delay pull request merging, especially if the primary author is unwilling or
+unable to improve their work. The alternative is worse though: Letting
+developers "clean things up later" results in codebase degeneration. Good
+developers usually tolerate (and some crazy ones even welcome!) easy cleanup
+suggestions. Good reviewers usually stay away from suggesting difficult
+changes unnecessary for merging the PR. These two extreme cases are rarely a
+problem. The "Pull request cleanup" section classifies all cleanup cases and,
+where possible, prescribes their treatment.
+
+[require cleanup]:
+  https://github.com/google/eng-practices/blob/master/review/reviewer/pushback.md#cleaning-it-up-later-later
+  "Google's 'Cleaning It Up Later' discussion"
 
 <a name="p3"></a>**p3**: Facts overrule opinions and personal preferences.
 
@@ -72,12 +77,16 @@ or even same-week reviews, we can assure steady non-discriminatory
 Project-wide progress.
 
 <a name="p8"></a>**p8**: Reviewers should follow well-known general code
-review practices such as those documented
-[elsewhere](https://google.github.io/eng-practices/review/reviewer/comments.html).
+review practices such as [How to write code review comments].
+
+[How to write code review comments]:
+  https://google.github.io/eng-practices/review/reviewer/comments.html
 
 <a name="p9"></a>**p9**: Authors should follow well-known general code
-submission practices such as those documented
-[elsewhere](https://google.github.io/eng-practices/review/developer/).
+submission practices such as [Author’s guide to getting through code review].
+
+[Author’s guide to getting through code review]:
+  https://google.github.io/eng-practices/review/developer/
 
 For curated references related to code reviews see, for example,
 [elsewhere](https://github.com/joho/awesome-code-review).
@@ -112,10 +121,12 @@ that impact probability:
   new/experimental protocol; adding an extra disk I/Os due to careless offset
   alignment (in miss-storing code that buffers I/Os); sprinkling code with 20
   difficult-to-connect `int` variables used for the same distinct purpose
-  (instead of introducing a `FooBar` typedef); violating C++ [Core
-  Guidelines](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md)
+  (instead of introducing a `FooBar` typedef); violating [C++ Core Guidelines]
   (in non-critical ways); forgetting to document a new method that has a
   dangerous unexpected side effect.
+
+[C++ Core Guidelines]:
+  https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md
 
 * _minor_: Introduces (or adds to) a non-critical annoyance that may, under
   rare conditions, slightly inconvenience users or developers. Examples
