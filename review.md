@@ -53,9 +53,8 @@ treatment.
 Styling not covered by the Guide (or covered by the currently conflicting
 Guide requirements) is a matter of personal preference. Personal choices
 should still be consistent with the committed code, especially with similar
-committed code, but finding consistency in Squid code or, more importantly,
-agreeing which code should be considered in that search is difficult. In gray
-area cases, the author’s style should be accepted.
+committed code (but [p6](#p6) caveats often apply here as well). In gray area
+styling cases, the author’s style should be accepted.
 
 [Style Guide]:
   https://wiki.squid-cache.org/SquidCodingGuidelines
@@ -84,6 +83,17 @@ engineering.
 <a name="p6"></a>p6: If no other rule applies, then the reviewer may ask the
 author to be consistent with what is in the current codebase.
 ----
+
+Unfortunately, finding consistency in Squid code or, more importantly,
+agreeing which code should be considered in that search is often difficult.
+For example, when 30 old code snippets use approach X while 3 newer commits
+use approach Y, it may be difficult to agree whether the PR should follow X or
+Y.
+
+In the scope of this "last resort" principle, newer contributors should avoid
+insisting on "their way" if more experienced Squid developers agree on what
+"consistent" means in the scope of a particular PR change. Unfortunately,
+experienced Squid developers often themselves disagree on that definition.
 
 
 <a name="p7"></a>p7: Reviewers should initiate new and update old reviews in
