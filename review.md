@@ -8,40 +8,48 @@ Squid Project specifics.
   https://google.github.io/eng-practices/review/reviewer/standard.html
   "Google's Standard of Code Review"
 
-<a name="rp1"></a>rp1: Pull requests that improve at least one area without
-making things worse elsewhere should be accepted (in principle)
+<a name="rp1"></a>rp1: Most pull requests that improve Squid should be cleaned
+up and accepted
 ----
 
-In its pure form, this basic principle is rarely applicable because accepting
-any pull request has its costs -- even the best PRs usually add new code that
-will need to be maintained long-term and require short-term resource spending
-on review, testing, change log adjustments, backporting, etc. A reviewer must
-carefully assess PR's positive and negative sides, considering not just the
-code being modified but the entire Squid code base as well as Squid
-maintenance, deployment, interoperability, and legal concerns. In most cases,
-apples-to-oranges comparisons make it impossible to formally prove that the
-positives outweigh the negatives, necessitating judgment calls.
+This primary principle reflects several key facts:
 
-<a name="rp2"></a>rp2: Acceptable (in principle) pull requests that can be
-cleaned up should be cleaned up
+1. We want to accept _all_ Squid improvements, but
+2. most PRs require a cleanup before they can be accepted, and
+3. some exceptional PRs should be rejected even if they improve Squid.
+
+The first statement expresses the fundamentally open nature of the Squid
+Project: All kinds of improvements from all kinds of contributors are welcomed
+by default. Squid is not a "highly opinionated" but a "highly configurable"
+tool. PR rejection is a rare exception that must be carefully substantiated by
+the rejecting reviewer.
+
+The second statement implies that a PR should not be immediately rejected just
+because it needs to be polished. Nobody expects perfect PRs. If necessary,
+reviewers use GitHub change requests to direct cleanup. See the
+[Cleanup](#cleanup) section below for more details.
+
+If the Project wants to accept all improvements, why reject some of them?
+Accepting any pull request has its costs -- even the best PRs usually add new
+code that will need to be maintained long-term and require short-term spending
+on review, testing, change log adjustments, backporting, etc. Both the PR
+author and the reviewer must carefully assess PR's positive and negative
+sides, considering not just the code being modified but the entire Squid
+codebase as well as Squid maintenance, deployment, interoperability, and legal
+concerns.
+
+In most cases, apples-to-oranges comparisons make it impossible to formally
+prove that the positives outweigh the negatives, necessitating judgment calls
+during high-level PR review. It may be difficult for potential contributors to
+predict the outcome of such a review. Authors that plan to submit a large or
+controversial PRs are encouraged to post a Request For Comments email to the
+squid-dev mailing list _before_ diving into development. While an RFC
+acceptance does not guarantee future PR acceptance, most unrectifiable PR
+rejections can be avoided during an RFC review.
+
+
+<a name="rp2"></a>rp2: Reserved for future use
 ----
-
-Squid lacks an army of developers that can quickly clean up dirty PRs, but
-even the behemoths with enough resources [require cleanup] before most pull
-requests go in. Cleanup may, unfortunately, delay pull request merging,
-especially if the primary author is unwilling or unable to improve their work.
-The alternative is worse though: Letting developers "clean things up later"
-results in codebase degeneration. Good developers usually tolerate (and some
-crazy ones even welcome!) easy cleanup suggestions. Good reviewers usually
-stay away from suggesting difficult changes unnecessary for merging the PR.
-These two extreme cases are rarely a problem. The "Pull request cleanup"
-section classifies all cleanup cases and, where possible, prescribes their
-treatment.
-
-[require cleanup]:
-  https://github.com/google/eng-practices/blob/master/review/reviewer/pushback.md#cleaning-it-up-later-later
-  "Google's 'Cleaning It Up Later' discussion"
-
 
 <a name="rp3"></a>rp3: Reserved for future use
 ----
@@ -139,7 +147,40 @@ See, for example, [Author’s guide to getting through code review].
 
 
 <a name="cleanup"></a>Pull request cleanup
-----
+====
+
+Most PRs can be improved, but endless PR improvements block Project progress,
+and some PR improvements are prohibitively expensive. Balancing the desire for
+clean code with the need to move forward at reasonable cost requires judgment
+calls by authors and reviewers alike. These judgment calls often lead to
+costly arguments. This section offers a classification of cleanup cases in
+hope to structure and narrow those arguments, but it starts with a cleanup
+justification because many new contributors are surprised by requests to
+change already "working" PR code.
+
+## Why cleanup _now_?
+
+It is tempting to accept any PR that is free of known functionality bugs:
+Things can always be polished later! Way before the GitHub days, the Squid
+Project had used a similar approach for many years. The current hodgepodge of
+architectural styles, API generations, and unmaintainable (but "working" or
+"used to be working") legacy code is, in part, attributed to that practice.
+
+Squid lacks an army of developers that can quickly clean up dirty PRs, but
+even the behemoths with more than enough resources still [require cleanup]
+before most pull requests go in. Cleanup may delay pull request merging,
+especially if the primary author is unwilling or unable to improve their work,
+but the alternative is even worse: Letting developers "clean things up later"
+results in codebase degeneration.
+
+[require cleanup]:
+  https://github.com/google/eng-practices/blob/master/review/reviewer/pushback.md#cleaning-it-up-later-later
+  "Google's 'Cleaning It Up Later' discussion"
+
+Good developers usually tolerate (and some really crazy ones even appreciate!)
+easy cleanup suggestions. Good reviewers usually do not insist on difficult
+changes going way beyond PR scope. Review troubles thrive in the large gray
+area between those two extremes.
 
 The table below partially illustrates the cleanup decision space by
 highlighting two key dimensions: the importance of the problem versus the
