@@ -47,21 +47,13 @@ squid-dev mailing list _before_ diving into development. While an RFC
 acceptance does not guarantee future PR acceptance, most unrectifiable PR
 rejections can be avoided during an RFC review.
 
-
-<a name="rp2"></a>rp2: Reserved for future use
-----
-
-<a name="rp3"></a>rp3: Reserved for future use
-----
-
-
-<a name="rp4"></a>rp4: On matters of style, the [Style Guide] is the authority
+<a name="rp2"></a>rp2: On matters of style, the [Style Guide] is the authority
 ----
 
 Styling not covered by the Guide (or covered by the currently conflicting
 Guide requirements) is a matter of personal preference. Personal choices
 should still be consistent with the committed code, especially with similar
-committed code (but [rp6](#rp6) caveats often apply here as well). In gray area
+committed code (but [rp4](#rp4) caveats often apply here as well). In gray area
 styling cases, the author’s style should be accepted.
 
 [Style Guide]:
@@ -74,7 +66,7 @@ defining nearly all formatting aspects. However, insisting on that ideal is
 premature until Squid auto-formatting tools become more comprehensive and
 developer-friendly.
 
-<a name="rp5"></a>rp5: Quality software is designed on solid engineering
+<a name="rp3"></a>rp3: Quality software is designed on solid engineering
 principles
 ----
 
@@ -88,7 +80,7 @@ Otherwise, the choice is dictated by the well-known principles of software
 engineering.
 
 
-<a name="rp6"></a>rp6: If no other rule applies, then the reviewer may ask the
+<a name="rp4"></a>rp4: If no other rule applies, then the reviewer may ask the
 author to be consistent with what is in the current codebase
 ----
 
@@ -104,7 +96,7 @@ insisting on "their way" if more experienced Squid developers agree on what
 experienced Squid developers often themselves disagree on that definition.
 
 
-<a name="rp7"></a>rp7: Reviewers should initiate new and update old reviews in
+<a name="rp5"></a>rp5: Reviewers should initiate new and update old reviews in
 the right order
 ----
 
@@ -127,7 +119,7 @@ resources to consistently provide same-day or even same-week reviews, we can
 assure steady non-discriminatory Project-wide progress.
 
 
-<a name="rp8"></a>rp8: Reviewers should follow well-known general code review
+<a name="rp6"></a>rp6: Reviewers should follow well-known general code review
 practices
 ----
 
@@ -136,7 +128,7 @@ See, for example, [How to write code review comments].
 [How to write code review comments]:
   https://google.github.io/eng-practices/review/reviewer/comments.html
 
-<a name="rp9"></a>rp9: Authors should follow well-known general code submission
+<a name="rp7"></a>rp7: Authors should follow well-known general code submission
 practices
 ----
 
