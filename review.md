@@ -184,85 +184,114 @@ area between those two extremes.
 
 The table below partially illustrates the cleanup decision space by
 highlighting two key dimensions: the importance of the problem versus the
-difficulty of implementing a solution. The two "?" cells require judgment
+difficulty of implementing a solution. The two `?` cells require judgment
 calls. The other data cells represent the Squid Project PR cleanup policy.
 
-|         | easy | moderate | hard |
-|:-------:|:----:|:--------:|:----:|
-|critical |  fix |    fix   |  fix |
-|serious  |  fix |    fix   |   ?  |
-|minor    |  fix |     ?    | TODO |
+|            | easy | moderate | hard |
+|:----------:|:----:|:--------:|:----:|
+|**critical**|  fix |    fix   |  fix |
+|**serious** |  fix |    fix   |   ?  |
+|**minor**   |  fix |     ?    | TODO |
 
 Problem severity is classified based on the expected problem impact, including
 that impact probability:
 
-* _critical_: May cause (or significantly increase the probability of)
+* **critical**: May cause (or significantly increase the probability of)
   crashes, protocol violations, frequent timeouts, sensitive information
   leaks, code bugs that are difficult for an average human reviewer and
-  deployed CI tools to detect, code maintenance nightmares, etc. Examples
-  include breaking known-to-be-used Squid functionality; duplicating large
-  amounts of code; using linear search for a potentially large data
-  collection.
+  deployed CI tools to detect, code maintenance nightmares, etc.
 
-* _serious_: Lies somewhere between _critical_ and _minor_. Examples include
-  responding with an "unsupported" error to valid but unusual messages in a
-  new/experimental protocol; adding an extra disk I/Os due to careless offset
-  alignment (in miss-storing code that buffers I/Os); sprinkling code with 20
-  difficult-to-connect `int` variables used for the same distinct purpose
-  (instead of introducing a `FooBar` typedef); violating [C++ Core Guidelines]
-  (in non-critical ways); forgetting to document a new method that has a
-  dangerous unexpected side effect.
+  Examples may include
+  * breaking known-to-be-used Squid functionality
+  * duplicating large amounts of code
+  * using linear search for a potentially large data collection
+
+* **serious**: Lies somewhere between _critical_ and _minor_.
+
+  Examples may include
+  * responding with an "unsupported" error to valid but somewhat unusual
+    messages in a new/experimental protocol
+  * adding an extra disk I/Os due to careless offset alignment (in
+    miss-storing code that buffers I/Os)
+  * sprinkling code with 20 difficult-to-connect `int` variables used for the
+    same distinct purpose (instead of introducing a `FooBar` typedef)
+  * violating [C++ Core Guidelines] (in non-critical ways)
+  * forgetting to document a new method that has a dangerous unexpected side
+    effect
 
 [C++ Core Guidelines]:
   https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md
 
-* _minor_: Introduces (or adds to) a non-critical annoyance that may, under
-  rare conditions, slightly inconvenience users or developers. Examples
-  include using identical error texts for different error messages; forgetting
-  to use `const` or `auto`; adding a C++ comment that describes what the code
-  already clearly says; using unusual for Squid code formatting (without
-  violating Squid Style Guide).
+* **minor**: Introduces (or adds to) a non-critical annoyance that may, under
+  rare conditions, slightly inconvenience users or developers.
+
+  Examples may include
+  * using identical error texts for different error messages
+  * forgetting to use `const` or `auto`
+  * adding a C++ comment that describes what the code already clearly says
+  * using unusual for Squid code formatting (without violating Squid Style
+    Guide)
 
 Cleanup difficulty categories are based on the cleanup cost, expressed in time
 a capable developer is likely to spend on addressing the problem:
 
-* _easy_: Can be addressed by a capable developer in under an hour. In many
-  (but not all) cases, easy cleanup changes would be unwelcomed as a
-  stand-alone PR (e.g., because their partial nature would not properly
-  address a widespread legacy problem (e.g., fixing spelling of comments added
-  by the being reviewed PR would not fix numerous spelling errors in other
-  comments) and/or because the expenses associated with such a stand-alone PR
-  would outweigh its benefits); can be reviewed in isolation (i.e., without
-  requiring a re-review of the entire PR); do not increase the risks
-  associated with the PR; and either belong to the PR scope or can be
-  classified as scope-neutral cleanup of the already modified/moved/added
-  code. Examples include spelling fixes for newly added text; improving new
-  variable names using specific suggestions; removing essentially unused code
-  (either introduced by the PR or made unused by PR changes); naming a
-  general-purpose type (e.g., `int`) repeatedly used in new methods for the
-  same purpose; fixing const-correctness of new or touched old declarations;
-  avoiding legacy APIs using readily-available replacements; making code
-  exception safe\(r\) using readily-available smart pointers; adding a C++
-  comment to document an out-of-scope bug that was discovered during review.
+* **easy**: Can be addressed by a capable developer in **under an hour**.
 
-* _moderate_: Lies somewhere between _easy_ and _hard_. Examples may include
-  non-trivial encapsulation of repeated code logic in a new function or small
-  class (e.g., a new smart pointer with a well-understood logic that was not
-  needed in before-PR code); modernizing parsing using readily-available
-  tokenizers; modernizing error handling using C++ exceptions.
+  In many (but not all) cases, easy cleanup changes
+  * would be unwelcomed as a stand-alone PR (e.g., because their partial
+    nature would not properly address a widespread legacy problem (e.g.,
+    fixing spelling of comments added by the being-reviewed PR would not fix
+    numerous spelling errors in other comments) and/or because the expenses
+    associated with such a stand-alone PR would outweigh its benefits) (XXX:
+    too long/complex!);
+  * can be reviewed in isolation (i.e., without requiring a re-review of the
+    entire PR);
+  * do not increase the risks associated with the PR; and
+  * either belong to the PR scope or can be classified as scope-neutral
+    cleanup of the already modified/moved/added code.
 
-* _hard_: Is likely to take a capable developer significantly more than a few
-  hours. In many (but not all) cases, hard cleanup enlarges/changes PR scope;
-  is likely to be accepted as a stand-alone PR; or noticeably increases PR
-  risks. Examples may include replacing 100 sequential `if` statements and
-  offset increments with an incremental parser for a new protocol/language;
-  adding SMP support to a state-rich legacy feature.
+  Examples may include
+  * spelling fixes for newly added text
+  * improving new variable names using specific suggestions
+  * removing essentially unused code (either introduced by the PR or made
+    unused by PR changes)
+  * naming a general-purpose type (e.g., `int`) repeatedly used in new methods
+    for the same purpose
+  * fixing const-correctness of new or touched old declarations
+  * avoiding legacy APIs using readily-available replacements
+  * making code exception safe\(r\) using readily-available smart pointers
+  * adding a C++ comment to document an out-of-scope bug that was discovered
+    during review
+
+* **moderate**: Lies somewhere between _easy_ and _hard_.
+
+  Examples may include
+  * non-trivial encapsulation of repeated code logic in a new function or
+    small class (e.g., a new smart pointer with a well-understood logic that
+    was not needed in before-PR code)
+  * modernizing parsing using readily-available tokenizers
+  * modernizing error handling using C++ exceptions
+
+* **hard**: Is likely to take a capable developer significantly **more than a
+  few hours**.
+
+  In many (but not all) cases, hard cleanup
+  * enlarges/changes PR scope;
+  * is likely to be accepted as a stand-alone PR;
+  * or noticeably increases PR risks.
+
+  Examples may include
+  * replacing 100 sequential `if` statements and offset increments with an
+    incremental parser for a new protocol/language
+  * adding SMP support to a state-rich legacy feature.
 
 Cleanup action:
 
-* _fix_: The PR should be changed, using reviewer suggestions as guidance and adjusting them as needed. See the "Who should clean up?" section below for a related discussion.
+* **fix**: The PR should be changed, using reviewer suggestions as guidance
+  and adjusting them as needed. See the "Who should clean up?" section below
+  for a related discussion.
 
-* _TODO_: If the author prefers not to implement the changes (that both
+* **TODO**: If the author prefers not to implement the changes (that both
   reviewer and author agree fall under this TODO action), the author can just
   add a TODO comment instead.
 
