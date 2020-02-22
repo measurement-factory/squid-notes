@@ -1,4 +1,4 @@
-If Squid can generate the right blocking message, then use Squid to generate
+<a name="adapt-block-by-squid"></a>If Squid can generate the right blocking message, then use Squid to generate
 the right blocking message.
 ----
 
@@ -16,7 +16,7 @@ Rule of thumb ID: <a href="#adapt-block-by-squid">#adapt-block-by-squid</a>
 
 ----
 
-To decide whether to adapt an HTTP message using Squid configuration or an
+<a name="adapt-where"></a>To decide whether to adapt an HTTP message using Squid configuration or an
 adaptation service, consider the following rules:
 ----
 
@@ -41,7 +41,7 @@ Rule of thumb ID: <a href="#adapt-where">#adapt-where</a>
 
 ----
 
-Make everything work, including SslBump, _before_ customizing http_access
+<a name="admin-cfg-access-last"></a>Make everything work, including SslBump, _before_ customizing http_access
 rules.
 ----
 
@@ -55,7 +55,7 @@ Rule of thumb ID: <a href="#admin-cfg-access-last">#admin-cfg-access-last</a>
 
 ----
 
-If you are splicing a domain, then never bump it. If you want to bump it,
+<a name="admin-cfg-bump-hsts"></a>If you are splicing a domain, then never bump it. If you want to bump it,
 then neither splice it nor allow any other ways to reach it except through
 the bumping proxy.
 ----
@@ -72,7 +72,7 @@ Rule of thumb ID: <a href="#admin-cfg-bump-hsts">#admin-cfg-bump-hsts</a>
 
 ----
 
-Selecting the right cache_dir type:
+<a name="admin-cfg-cache-dir-type"></a>Selecting the right cache_dir type:
 ----
 
 1. Keep it as simple as possible (but no simpler): If you are OK without SMP
@@ -89,7 +89,7 @@ Rule of thumb ID: <a href="#admin-cfg-cache-dir-type">#admin-cfg-cache-dir-type<
 
 ----
 
-New squid.conf directives should look like this:
+<a name="admin-cfgdev-new-directive"></a>New squid.conf directives should look like this:
 ----
 
 1. directive name
@@ -124,7 +124,7 @@ Rule of thumb ID: <a href="#admin-cfgdev-new-directive">#admin-cfgdev-new-direct
 
 ----
 
-When writing ssl_bump rules, always tell Squid what to do at every step
+<a name="admin-cfg-each-step"></a>When writing ssl_bump rules, always tell Squid what to do at every step
 ----
 
 ... by making sure that at least one applicable ssl_bump rule matches at every
@@ -138,7 +138,7 @@ Rule of thumb ID: <a href="#admin-cfg-each-step">#admin-cfg-each-step</a>
 
 ----
 
-Make everything work, including SslBump, _before_ applying custom filtering
+<a name="admin-cfg-filter-last"></a>Make everything work, including SslBump, _before_ applying custom filtering
 rules.
 ----
 
@@ -149,7 +149,7 @@ Rule of thumb ID: <a href="#admin-cfg-filter-last">#admin-cfg-filter-last</a>
 
 ----
 
-In a performance-sensitive setup, the startup=n value for a given helper
+<a name="admin-cfg-hlp-startup"></a>In a performance-sensitive setup, the startup=n value for a given helper
 should correspond to the maximum number of those helpers actually used when
 handling normal day-to-day traffic.
 ----
@@ -166,7 +166,7 @@ Rule of thumb ID: <a href="#admin-cfg-hlp-startup">#admin-cfg-hlp-startup</a>
 
 ----
 
-Fewer refresh_pattern lines lead to better performance.
+<a name="admin-cfg-merge-refresh"></a>Fewer refresh_pattern lines lead to better performance.
 ----
 
 For example, replacing
@@ -192,7 +192,7 @@ Rule of thumb ID: <a href="#admin-cfg-merge-refresh">#admin-cfg-merge-refresh</a
 
 ----
 
-When there is an alternative, avoid regular expressions.
+<a name="admin-cfg-no-regex"></a>When there is an alternative, avoid regular expressions.
 ----
 
 Regular expressions are relatively slow and may be difficult to interpret
@@ -212,7 +212,7 @@ Rule of thumb ID: <a href="#admin-cfg-no-regex">#admin-cfg-no-regex</a>
 
 ----
 
-Squid does not officially support any OpenSSL derivatives such as BoringSSL
+<a name="admin-cfg-openssl-forks"></a>Squid does not officially support any OpenSSL derivatives such as BoringSSL
 or LibreSSL, but if you, at your own risk, want to switch among those
 libraries, then install _each_ library in a library-specific location that is
 not known to any other package or library.
@@ -229,7 +229,7 @@ Rule of thumb ID: <a href="#admin-cfg-openssl-forks">#admin-cfg-openssl-forks</a
 
 ----
 
-When solving reverse proxy caching problems, it is best to fix them using
+<a name="admin-cfg-rev-http-rules"></a>When solving reverse proxy caching problems, it is best to fix them using
 proper HTTP mechanisms
 ----
 
@@ -245,7 +245,7 @@ Rule of thumb ID: <a href="#admin-cfg-rev-http-rules">#admin-cfg-rev-http-rules<
 
 ----
 
-If you want to optimize performance of a disk-caching Squid running on beefy
+<a name="admin-disk-optim"></a>If you want to optimize performance of a disk-caching Squid running on beefy
 hardware, and are ready to spend non-trivial amounts of time/labor/money
 doing that, then consider the following rules:
 ----
@@ -296,7 +296,7 @@ Rule of thumb ID: <a href="#admin-disk-optim">#admin-disk-optim</a>
 
 ----
 
-When suspecting a Squid bug, check whether an upgrade resolves the issue.
+<a name="admin-fix-by-upgrade"></a>When suspecting a Squid bug, check whether an upgrade resolves the issue.
 ----
 
 This is especially good advice for actively changing areas such as (at the
@@ -309,7 +309,7 @@ Rule of thumb ID: <a href="#admin-fix-by-upgrade">#admin-fix-by-upgrade</a>
 
 ----
 
-When running SMP Squid or multiple Squid instances that share underlying
+<a name="admin-hw-share"></a>When running SMP Squid or multiple Squid instances that share underlying
 hardware:
 ----
 
@@ -333,7 +333,7 @@ Rule of thumb ID: <a href="#admin-hw-share">#admin-hw-share</a>
 
 ----
 
-If you are already familiar with a particular OS, go with that OS.
+<a name="admin-which-os"></a>If you are already familiar with a particular OS, go with that OS.
 ----
 
 When selecting a Squid deployment operating system, this rule flattens the
@@ -347,7 +347,7 @@ Rule of thumb ID: <a href="#admin-which-os">#admin-which-os</a>
 
 ----
 
-Start with the latest supported version you can deploy.
+<a name="admin-which-version"></a>Start with the latest supported version you can deploy.
 ----
 
 When selecting the Squid (or OS) version to deploy, this rule maximizes the
@@ -360,7 +360,7 @@ Rule of thumb ID: <a href="#admin-which-version">#admin-which-version</a>
 
 ----
 
-Put boolean data members last.
+<a name="api-bool-last"></a>Put boolean data members last.
 ----
 
 This rule often reduces padding and might help enable some low-level compiler
@@ -374,7 +374,7 @@ Rule of thumb ID: <a href="#api-bool-last">#api-bool-last</a>
 
 ----
 
-Library-agnostic APIs (e.g., `Security`) must be the same, regardless of the
+<a name="api-same-for-each-lib"></a>Library-agnostic APIs (e.g., `Security`) must be the same, regardless of the
 library Squid is being compiled with.
 ----
 
@@ -409,7 +409,7 @@ Rule of thumb ID: <a href="#api-same-for-each-lib">#api-same-for-each-lib</a>
 
 ----
 
-If list elements have to store their position in their list (for any reason),
+<a name="arch-ilist"></a>If list elements have to store their position in their list (for any reason),
 then a performance-sensitive code should use an intrusive list.
 ----
 
@@ -424,7 +424,7 @@ Rule of thumb ID: <a href="#arch-ilist">#arch-ilist</a>
 
 ----
 
-In source code comments, avoid repeating what the code already clearly says.
+<a name="cmnt-dry"></a>In source code comments, avoid repeating what the code already clearly says.
 ----
 
 This is one of the applications of the even more general [DRY] principle.
@@ -440,7 +440,7 @@ Rule of thumb ID: <a href="#cmnt-dry">#cmnt-dry</a>
 
 ----
 
-A Comm::Connection owner must maintain a closing callback.
+<a name="conn-close-cb"></a>A Comm::Connection owner must maintain a closing callback.
 ----
 
 Even with a closing handler, the owner has to tolerate a _closing_ connection,
@@ -456,7 +456,7 @@ Rule of thumb ID: <a href="#conn-close-cb">#conn-close-cb</a>
 
 ----
 
-Before using a Connection object delivered by an AsyncCall, the receiving
+<a name="conn-via-async"></a>Before using a Connection object delivered by an AsyncCall, the receiving
 code must check that the connection is not closing.
 ----
 
@@ -476,7 +476,7 @@ Rule of thumb ID: <a href="#conn-via-async">#conn-via-async</a>
 
 ----
 
-When an owner of a Comm::Connection object decides that it is time to close
+<a name="conn-when-to-close"></a>When an owner of a Comm::Connection object decides that it is time to close
 the underlying transport connection, that owner should call
 `Comm::Connection::close()`.
 ----
@@ -488,7 +488,7 @@ Rule of thumb ID: <a href="#conn-when-to-close">#conn-when-to-close</a>
 
 ----
 
-If you can improve the wiki, do not wait for others.
+<a name="doc-doit"></a>If you can improve the wiki, do not wait for others.
 ----
 
 Original Context:
@@ -498,7 +498,7 @@ Rule of thumb ID: <a href="#doc-doit">#doc-doit</a>
 
 ----
 
-Manual fixes affecting a lot of code with no functionality changes are
+<a name="edit-man-lots"></a>Manual fixes affecting a lot of code with no functionality changes are
 usually not worth their (total) cost.
 ----
 
@@ -510,7 +510,7 @@ Rule of thumb ID: <a href="#edit-man-lots">#edit-man-lots</a>
 
 ----
 
-When reporting various errors, bugs, and problems:
+<a name="err-level"></a>When reporting various errors, bugs, and problems:
 ----
 
 1. Level-0/1 messages should be used for important events affecting the Squid
@@ -536,7 +536,7 @@ Rule of thumb ID: <a href="#err-level">#err-level</a>
 
 ----
 
-Do not catch exceptions that you do not intend to (at least partially)
+<a name="ex-let-bubble"></a>Do not catch exceptions that you do not intend to (at least partially)
 handle.
 ----
 
@@ -551,7 +551,7 @@ Rule of thumb ID: <a href="#ex-let-bubble">#ex-let-bubble</a>
 
 ----
 
-A function must not put garbage into its output parameter regardless of what
+<a name="fun-bad-out"></a>A function must not put garbage into its output parameter regardless of what
 that function returns.
 ----
 
@@ -573,7 +573,7 @@ Rule of thumb ID: <a href="#fun-bad-out">#fun-bad-out</a>
 
 ----
 
-`foo.h` should `#include` (directly or indirectly) all headers that are
+<a name="include-enough"></a>`foo.h` should `#include` (directly or indirectly) all headers that are
 necessary for compiling `foo.h`.
 ----
 
@@ -587,7 +587,7 @@ Rule of thumb ID: <a href="#include-enough">#include-enough</a>
 
 ----
 
-All `src/` header files should be included using paths relative to `src`.
+<a name="include-paths"></a>All `src/` header files should be included using paths relative to `src`.
 ----
 
 When already in `src/foo/`, writing `#include "f.h"` to include `src/foo/f.h`
@@ -606,7 +606,7 @@ Rule of thumb ID: <a href="#include-paths">#include-paths</a>
 
 ----
 
-A macro-using code that can be compiled even if that macro is undefined must
+<a name="macro-include"></a>A macro-using code that can be compiled even if that macro is undefined must
 explicitly `#include` the header providing that macro.
 ----
 
@@ -624,7 +624,7 @@ Rule of thumb ID: <a href="#macro-include">#macro-include</a>
 
 ----
 
-Do not label a PR `M-cleared-for-merge` until no more human PR work is
+<a name="pr-clear-preemie"></a>Do not label a PR `M-cleared-for-merge` until no more human PR work is
 anticipated.
 ----
 
@@ -647,7 +647,7 @@ Rule of thumb ID: <a href="#pr-clear-preemie">#pr-clear-preemie</a>
 
 ----
 
-When referencing a commit ID from a Squid commit message or documentation:
+<a name="pr-commit-id"></a>When referencing a commit ID from a Squid commit message or documentation:
 ----
 
 1. Avoid references to commits outside of the official Squid repository. If
@@ -676,7 +676,7 @@ Rule of thumb ID: <a href="#pr-commit-id">#pr-commit-id</a>
 
 ----
 
-A pull request should include all the essentials for understanding the
+<a name="pr-encompass"></a>A pull request should include all the essentials for understanding the
 change.
 ----
 
@@ -690,7 +690,7 @@ Rule of thumb ID: <a href="#pr-encompass">#pr-encompass</a>
 
 ----
 
-If an existing `forward.h` file is missing a forward declaration, please fix
+<a name="pr-fwd-fix"></a>If an existing `forward.h` file is missing a forward declaration, please fix
 that file (instead of forward-declaring elsewhere).
 ----
 
@@ -707,7 +707,7 @@ Rule of thumb ID: <a href="#pr-fwd-fix">#pr-fwd-fix</a>
 
 ----
 
-If you have to change a source code line for some PR-related reason, then do
+<a name="pr-polish-changed"></a>If you have to change a source code line for some PR-related reason, then do
 apply basic cleanup changes as well (e.g., HERE removal and NULL
 replacement).
 ----
@@ -726,7 +726,7 @@ Rule of thumb ID: <a href="#pr-polish-changed">#pr-polish-changed</a>
 
 ----
 
-If you do not need to change a line, do not change it just to polish it
+<a name="pr-polish-unchanged"></a>If you do not need to change a line, do not change it just to polish it
 (e.g., to remove HERE or replace NULLs).
 ----
 
@@ -743,7 +743,7 @@ Rule of thumb ID: <a href="#pr-polish-unchanged">#pr-polish-unchanged</a>
 
 ----
 
-If you can use `auto`, use `auto`.
+<a name="style-auto"></a>If you can use `auto`, use `auto`.
 ----
 
 Get into the habit of typing `auto` first and changing it to a specific type
@@ -755,7 +755,7 @@ Rule of thumb ID: <a href="#style-auto">#style-auto</a>
 
 ----
 
-Destruction/closure/etc. is always safe (and is always a no-op if repeated)
+<a name="style-cond-close"></a>Destruction/closure/etc. is always safe (and is always a no-op if repeated)
 -- no checks should be needed in the caller.
 ----
 
@@ -768,7 +768,7 @@ Rule of thumb ID: <a href="#style-cond-close">#style-cond-close</a>
 
 ----
 
-If you can use `const`, use `const`.
+<a name="style-const"></a>If you can use `const`, use `const`.
 ----
 
 Get into the habit of typing `const` first and removing it later if needed.
@@ -784,7 +784,7 @@ Rule of thumb ID: <a href="#style-const">#style-const</a>
 
 ----
 
-Small, single-`#if CONDITION` preprocessor statements should not add the `/*
+<a name="style-end-cmnt"></a>Small, single-`#if CONDITION` preprocessor statements should not add the `/*
 CONDITION */` comment to the closing `#endif`.
 ----
 
@@ -800,7 +800,7 @@ Rule of thumb ID: <a href="#style-end-cmnt">#style-end-cmnt</a>
 
 ----
 
-Do not say `Foo::` inside `Foo`.
+<a name="style-foo-foo"></a>Do not say `Foo::` inside `Foo`.
 ----
 
 This is one of the applications of the even more general [DRY] or "avoid code
@@ -813,7 +813,7 @@ Rule of thumb ID: <a href="#style-foo-foo">#style-foo-foo</a>
 
 ----
 
-Function definitions in header files should use the `inline` keyword.
+<a name="style-fun-inline-hdr"></a>Function definitions in header files should use the `inline` keyword.
 ----
 
 This rule covers templated function definitions and specializations.
@@ -831,7 +831,7 @@ Rule of thumb ID: <a href="#style-fun-inline-hdr">#style-fun-inline-hdr</a>
 
 ----
 
-One Must() or assert() per ANDed condition. For example, instead of writing
+<a name="style-split-musts"></a>One Must() or assert() per ANDed condition. For example, instead of writing
 `assert(a && b)`, write `assert(a); assert(b)`.
 ----
 
@@ -843,7 +843,7 @@ Rule of thumb ID: <a href="#style-split-musts">#style-split-musts</a>
 
 ----
 
-When testing, check that the changed code was actually exercised. Avoid
+<a name="test-changes"></a>When testing, check that the changed code was actually exercised. Avoid
 claiming that the PR was tested unless you have verified that the changes
 were exercised during the tests.
 ----
@@ -855,7 +855,7 @@ Rule of thumb ID: <a href="#test-changes">#test-changes</a>
 
 ----
 
-The lifetime of any view storage should not exceed the lifetime of the
+<a name="view-life"></a>The lifetime of any view storage should not exceed the lifetime of the
 originating string.
 ----
 

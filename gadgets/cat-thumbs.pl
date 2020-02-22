@@ -52,6 +52,7 @@ sub printThumb {
 
     my ($thumbName) = ($fname =~ m@([^/]+)[.]md$@);
     die("cannot guess thumb name in $fname; stopped") unless length $thumbName;
+    printf('<a name="%s"></a>', $thumbName);
     print($thumb);
     print("\n");
     printf('Rule of thumb ID: <a href="#%s">#%s</a>', $thumbName, $thumbName);
