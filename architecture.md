@@ -1,32 +1,35 @@
 ### Architectural principles
 
-thumbX: When an owner of a Comm::Connection object decides that it is time to
-close the underlying transport connection, that owner should call
-Comm::Connection::close().
+thumbX{conn-when-to-close}: When an owner of a Comm::Connection object decides
+that it is time to close the underlying transport connection, that owner
+should call `Comm::Connection::close()`.
 
 Original Context:
 https://github.com/squid-cache/squid/pull/489#discussion_r377775116
 
 
-thumbX: a Comm::Connection owner must maintain a closing callback. Even with a
-closing handler, the owner has to tolerate a _closing_ connection, but without
-callback, the underlying FD may be closed without job's knowledge, leaving a
-stale/out-of-sync Connection::fd value behind. The later state _cannot_ be
-reliably detected be the owner and leads to low-level assertions, crashes,
-information leaks, etc.
+thumbX{conn-close-cb}: A Comm::Connection owner must maintain a closing
+callback.
+
+Even with a closing handler, the owner has to tolerate a _closing_ connection,
+but without callback, the underlying FD may be closed without job's knowledge,
+leaving a stale/out-of-sync Connection::fd value behind. The later state
+_cannot_ be reliably detected be the owner and leads to low-level assertions,
+crashes, information leaks, etc.
 
 Original Context:
 https://github.com/squid-cache/squid/pull/489#discussion_r377775116
 
 
-thumbX: Manual fixes affecting a lot of code with no functionality changes are
-usually not worth their (total) cost [because they cannot be easily repeated
-30 times for 30 branches].
+thumbX{edit-man-lots}: Manual fixes affecting a lot of code with no
+functionality changes are usually not worth their (total) cost.
+
+... because they cannot be easily repeated 30 times for 30 branches.
 
 Original Context: http://bugs.squid-cache.org/show_bug.cgi?id=5021#c27
 
 
-thumbX: When reporting various errors, bugs, and problems:
+thumbX{err-level}: When reporting various errors, bugs, and problems:
 
 1. Level-0/1 messages should be used for important events affecting the Squid
    instance as a whole (e.g., (suspected) serious Squid bugs,
@@ -47,64 +50,71 @@ Original Context:
 https://github.com/squid-cache/squid/pull/411#discussion_r362064319
 https://github.com/squid-cache/squid/pull/411#discussion_r382656921
 
-thumbX: The rule of thumb for safe string view usage is that the lifetime of
-any view storage should not exceed the lifetime of the originating string.
+
+thumbX{view-life}: The lifetime of any view storage should not exceed the
+lifetime of the originating string.
 
 Original Context:
 https://github.com/squid-cache/squid/pull/481#discussion_r361757292
 
 
-thumbX: Before using a Connection object delivered by an AsyncCall, the
-receiving code must check that the connection is not closing. The call
-scheduler (i.e. connection sender) cannot guarantee connection usability at
-the future asynchronous call firing time.
+thumbX{conn-via-async}: Before using a Connection object delivered by an
+AsyncCall, the receiving code must check that the connection is not closing.
+
+The call scheduler (i.e. connection sender) cannot guarantee connection
+usability at the future asynchronous call firing time.
 
 XXX: The connection FD may be closed (leaving a stale Connection object
 behind) while the AsyncCall is queued unless the AsyncCall itself properly
-owns the connection per thumbW. None of the existing AsyncCalls own their
-connections!
+owns the connection per thumb_ref{conn-close-cb}. None of the existing
+AsyncCalls own their connections!
 
 Original Context: A deleted (for irrelevant here reasons) GitHUb comment, but
 see its eventual replacement for context:
 https://github.com/measurement-factory/squid/pull/37#pullrequestreview-306172339.
 
 
+thumbX{style-cond-close}: Destruction/closure/etc. is always safe (and is
+always a no-op if repeated) -- no checks should be needed in the caller.
 
-thumbX: Destruction/closure/etc. is always safe (and is always a no-op if
-repeated) -- no checks should be needed in the caller. For example, do not
-write `if (x.open()) x.close()`; just say `x.close()`. Similarly, do not write
-`if (x) delete x`; just say `delete x`.
+For example, do not write `if (x.open()) x.close()`; just say `x.close()`.
+Similarly, do not write `if (x) delete x`; just say `delete x`.
 
 Original Context: https://github.com/measurement-factory/squid/commit/257ad12e3007cbf789a1f83bd75424bd920760e4#r34033833
 
 
-thumbX: If you can improve the wiki, do not wait for others.
+thumbX{doc-doit}: If you can improve the wiki, do not wait for others.
 
 Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2019-September/021089.html
 
 
-thumbX: Rule of thumb: Make everything work, including SslBump, _before_
-applying custom filtering rules.
+thumbX{admin-cfg-filter-last}: Rule of thumb: Make everything work, including
+SslBump, _before_ applying custom filtering rules.
 
 Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2019-August/020877.html
 
 
-thumbX: One Must() or assert() per ANDed condition. For example, instead of writing `assert(a && b)`, write `assert(a); assert(b)`.
+thumbX{style-split-musts}: One Must() or assert() per ANDed condition. For
+example, instead of writing `assert(a && b)`, write `assert(a); assert(b)`.
 
 Original Context:
 https://github.com/squid-cache/squid/pull/139#discussion_r167452838
 https://github.com/squid-cache/squid/pull/411#discussion_r301246356
 
 
-thumbX: If you can use `auto`, use `auto`. Get into the habit of typing `auto` first and changing it to a specific type later if needed.
+thumbX{style-auto}: If you can use `auto`, use `auto`.
+
+Get into the habit of typing `auto` first and changing it to a specific type
+later if needed.
 
 Original Context: https://github.com/squid-cache/squid/pull/425#discussion_r299032627
 
 
-thumbX: If you can use `const`, use `const`. Get into the habit of typing
-`const` first and removing it later if needed.
+thumbX{style-const}: If you can use `const`, use `const`.
+
+Get into the habit of typing `const` first and removing it later if needed.
 
 Exception: Omit useless `const` in declaration of by-value parameters (e.g.,
 do not say `void f(const int x);`), especially since some compilers may warn
@@ -114,21 +124,29 @@ do write `void f(const int x) {...}`).
 Original Context: https://github.com/squid-cache/squid/pull/425#discussion_r299032627
 
 
-thumbX: Do not catch exceptions that you do not intend to (at least partially) handle. Let them just bubble up. The "handling" itself is very catcher-specific, of course.
+thumbX{ex-let-bubble}: Do not catch exceptions that you do not intend to (at
+least partially) handle.
+
+Let exceptions your code does not handle in any way bubble up naturally,
+without passing through your `catch` clauses.
+
+The definition of "handling" itself is very catcher-specific, of course.
 
 Original Context: https://github.com/squid-cache/squid/pull/411#discussion_r290083328
 
 
-thumbX: A pull request (i.e. the future official commit) should include all
-the essentials for understanding the change, including a PR description (i.e.
-future commit message) that is usable without consulting external sources.
+thumbX{pr-encompass}: A pull request should include all the essentials for
+understanding the change.
+
+The essentials include a PR description (i.e. the future commit message) that
+is usable without consulting external sources.
 
 Original Context:
 https://github.com/squid-cache/squid/pull/410#issuecomment-496346607
 
 
-thumbX: In source code comments, avoid repeating what the code already clearly
-says.
+thumbX{cmnt-dry}: In source code comments, avoid repeating what the code
+already clearly says.
 
 This is one of the applications of the even more general [DRY] principle.
 
@@ -137,20 +155,27 @@ This is one of the applications of the even more general [DRY] principle.
     "Don't repeat yourself"
 
 Original Context: Occurred many times in many contexts but added here as a
-generalization of thumbW(In source code comments,...)
+generalization of thumb_ref{style-end-cmnt}.
 
 
-thumbX: Small, single-`#if CONDITION` preprocessor statements should not add the `/* CONDITION */` comment to the closing `#endif`. Do not document what the code already clearly says.
+thumbX{style-end-cmnt}: Small, single-`#if CONDITION` preprocessor statements
+should not add the `/* CONDITION */` comment to the closing `#endif`.
+
+The same rule applies to namespace closures.
+
+This is one of the applications of the more general thumb_ref{cmnt-dry}
+principle: We should not document what the code already clearly says.
 
 Original Context:
 https://github.com/measurement-factory/squid/pull/20#discussion_r277031498
 
 
-thumbX: The code using a macro in such a way that it can be compiled when the
-macro is not `#defined` must explicitly (i.e. directly) `#include` the header
-providing that macro. Relying on _indirect_ inclusion is too risky because the
-list of indirectly included headers may be changed by those who do not know
-about this hidden dependency.
+thumbX{macro-include}: A macro-using code that can be compiled even if that
+macro is undefined must explicitly `#include` the header providing that macro.
+
+Relying on _indirect_ inclusion is too risky here because the list of
+indirectly included headers may be changed by those who do not know about this
+hidden dependency.
 
 The `squid.h` header provides ./configure-driven feature-test macros (e.g.,
 `USE_OPENSSL` or `HAVE_GSSAPI`) that any source code file can count on.
@@ -159,17 +184,21 @@ Original Context:
 https://github.com/squid-cache/squid/pull/369#discussion_r259392784
 
 
-thumbX: `foo.h` should `#include` (directly or indirectly) all headers that
-are necessary for compiling `foo.h`. Squid headers should not explicitly
-`#include` `squid.h` but other Squid sources must explicitly `#include`
-`squid.h` as the very first `#include`.
+thumbX{include-enough}: `foo.h` should `#include` (directly or indirectly) all
+headers that are necessary for compiling `foo.h`.
 
-Original Context: Inspired by thumbW(The code using a macro...).
+Squid headers should not explicitly `#include` `squid.h` but other Squid
+sources must explicitly `#include` `squid.h` as the very first `#include`.
+
+Original Context: A common principle. Inclusion here is inspired by
+thumb_ref{macro-include}.
 
 
-thumbX: A function must not put garbage into its output parameter regardless
-of what that function returns. If the returned value tells the caller that the
-output parameter is not meaningful, then either reset the parameter (if the
+thumbX{fun-bad-out}: A function must not put garbage into its output parameter
+regardless of what that function returns.
+
+If the returned value tells the caller that the output parameter is not
+meaningful, then the function should either reset the parameter (if the
 callers naturally require that) or leave the output parameter as-is (by
 default).
 
@@ -183,19 +212,21 @@ Original Context:
 https://github.com/squid-cache/squid/pull/150#issuecomment-365828835
 
 
-thumbX: In a performance-sensitive setup, the startup=n value for a given
-helper should correspond to the maximum number of those helpers actually used
-when handling normal day-to-day traffic. While starting as many helpers as are
-necessary during a DoS attack may be an overkill, waiting for the load to
-increase before starting a reasonable number of helpers is counter-productive
-because leads to excessive transaction response times when the load naturally
-goes up.
+thumbX{admin-cfg-hlp-startup}: In a performance-sensitive setup, the startup=n
+value for a given helper should correspond to the maximum number of those
+helpers actually used when handling normal day-to-day traffic.
 
-Original Context: http://lists.squid-cache.org/pipermail/squid-users/2018-April/018071.html
+While starting as many helpers as are necessary during a DoS attack may be an
+overkill, waiting for the load to increase before starting a reasonable number
+of helpers is counter-productive because leads to excessive transaction
+response times when the load naturally goes up.
+
+Original Context:
+http://lists.squid-cache.org/pipermail/squid-users/2018-April/018071.html
 
 
-thumbX: When referencing a commit ID from a Squid commit message or
-documentation:
+thumbX{pr-commit-id}: When referencing a commit ID from a Squid commit message
+or documentation:
 
 1. Avoid references to commits outside of the official Squid repository. If
    such references are necessary, augment them with the repository
@@ -220,49 +251,52 @@ Original Context:
 https://github.com/squid-cache/squid/pull/187#issuecomment-387092785
 
 
-thumbX: If you do not need to change a line, do not change it just to polish
-it (e.g., to remove HERE or replace NULLs).
+thumbX{pr-polish-unchanged}: If you do not need to change a line, do not change
+it just to polish it (e.g., to remove HERE or replace NULLs).
 
 If you polished a line because it needed to be changed but then those changes
 were reverted, revert the polishing as well -- internal code gyrations do not
 matter.
 
-See also: thumbW(If you have to change a...)
+See also: thumb_ref{pr-polish-changed}.
 
 Original Context:
 http://bugs.squid-cache.org/show_bug.cgi?id=4857#c7
 
 
-thumbX: If you have to change a source code line for some PR-related reason,
-then do apply basic cleanup changes as well (e.g., HERE removal and NULL
-replacement).
+thumbX{pr-polish-changed}: If you have to change a source code line for some
+PR-related reason, then do apply basic cleanup changes as well (e.g., HERE
+removal and NULL replacement).
 
 This rule does not apply to automated source code changes, of course. Scripts
 may polish what they change if it is easy to do so, but it is unreasonable to
 expect every source code formatting or modernizing script to make every
 polishing touch a human would apply.
 
-See also: thumbW(If you do not need to change a line...)
-
+See also: thumb_ref{pr-polish-unchanged}.
 
 Original Context:
 http://bugs.squid-cache.org/show_bug.cgi?id=4857#c7
 
 
+thumbX{adapt-block-by-squid}: If Squid can generate the right blocking
+message, then use Squid to generate the right blocking message.
 
-
-thumbX: If Squid can generate the right blocking message, use Squid (instead
-of the eCAP or ICAP service) to generate the right blocking message.
+... instead of the eCAP or ICAP service for blocking message generation.
 
 This rule can be derived from the general "do not reinvent the wheel" rule or
 even the [DRY] rule. If Squid can do something well, let it do it.
+
+See also: thumb_ref{adapt-where}.
 
 Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2018-June/018374.html
 
 
-thumbX: Function definitions, including templated function definitions in
-header files should use the `inline` keyword.
+thumbX{style-fun-inline-hdr}: Function definitions in header files should use
+the `inline` keyword.
+
+This rule covers templated function definitions and specializations.
 
 This rule can be derived from the SF.2 ["headers may not contain non-inline
 function definitions"] rule from the C++ Core Guidelines.
@@ -276,8 +310,8 @@ https://github.com/measurement-factory/squid/pull/14#discussion_r218995374
 
 
 
-thumbX: Do not label a PR `M-cleared-for-merge` until no more human PR work is
-anticipated.
+thumbX{pr-clear-preemie}: Do not label a PR `M-cleared-for-merge` until no
+more human PR work is anticipated.
 
 Clearing the PR too early may result in premature PR merges when another human
 is manipulating the PR state. For example, a new positive review of an
@@ -295,24 +329,21 @@ Original Context:
 https://github.com/squid-cache/squid/pull/287#issuecomment-424370852
 
 
+thumbX{admin-cfg-cache-dir-type}: Selecting the right cache_dir type:
 
-
-
-thumbX: Selecting the right cache_dir type:
 1. Keep it as simple as possible (but no simpler): If you are OK without SMP
    and with ufs cache_dirs, then use no SMP and ufs.
-2. If you have to use SMP (i.e. multiple workers), then use rock cache_dir.
+2. If you have to use multiple workers, then use rock cache_dir.
 3. Otherwise, use whatever cache_dir type works best for you (ufs, rock, aufs,
    or diskd), but keep in mind that ufs is simpler than others, and that
    nobody actively works on aufs and diskd variants right now.
-
 
 Original Context:
 http://bugs.squid-cache.org/show_bug.cgi?id=4886#c6
 
 
 
-thumbX: Do not say `Foo::` inside `Foo`.
+thumbX{style-foo-foo}: Do not say `Foo::` inside `Foo`.
 
 This is one of the applications of the even more general [DRY] or "avoid code
 duplication" principle.
@@ -323,8 +354,8 @@ https://github.com/squid-cache/squid/pull/310#discussion_r228557709
 
 
 
-thumbX: When selecting the Squid (or OS) version to deploy: Start with the
-latest supported version you can deploy.
+thumbX{admin-which-version}: When selecting the Squid (or OS) version to
+deploy: Start with the latest supported version you can deploy.
 
 This rule maximizes the remaining support period, giving your more time before
 the required upgrade.
@@ -333,8 +364,8 @@ Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2018-October/019572.html
 
 
-thumbX: When selecting a Squid deployment operating system: If you are already
-familiar with a particular OS, go with that OS.
+thumbX{admin-which-os}: When selecting a Squid deployment operating system: If
+you are already familiar with a particular OS, go with that OS.
 
 Squid operates well-enough on many modern OSes (excluding Windows), for many
 common applications. This rule flattens the learning curve.
@@ -344,21 +375,22 @@ http://lists.squid-cache.org/pipermail/squid-users/2018-October/019572.html
 
 
 
-thumbX: Squid does not officially support any OpenSSL derivatives such as
-BoringSSL or LibreSSL, but if you, at your own risk, want to switch among
-those libraries, then install _each_ library in a library-specific location
-that is not known to any other package or library. Do not install any of them
-in the "standard" locations like `/usr/local/lib/` or `/usr/local/include/`
-that may be used by other packages or libraries.
+thumbX{admin-cfg-openssl-forks}: Squid does not officially support any OpenSSL
+derivatives such as BoringSSL or LibreSSL, but if you, at your own risk, want
+to switch among those libraries, then install _each_ library in a
+library-specific location that is not known to any other package or library.
 
+Do not install any of those libraries in the "standard" locations like
+`/usr/local/lib/` or `/usr/local/include/` that may be used by other packages
+or libraries.
 
 Original Context:
 http://bugs.squid-cache.org/show_bug.cgi?id=4662#c12
 
 
 
-thumbX: If an existing `forward.h` file is missing a forward declaration,
-please fix that file (instead of forward-declaring elsewhere).
+thumbX{pr-fwd-fix}: If an existing `forward.h` file is missing a forward
+declaration, please fix that file (instead of forward-declaring elsewhere).
 
 Adding a new `forward.h` file to an existing `src` subdirectory is also a good
 idea (assuming your pull request requires declarations provided by the library
@@ -370,7 +402,8 @@ Original Context:
 http://lists.squid-cache.org/pipermail/squid-dev/2017-January/007811.html
 
 
-thumbX: New squid.conf directives should look like this:
+thumbX{admin-cfgdev-new-directive}: New squid.conf directives should look like
+this:
 
 1. directive name
 2. unnamed fixed-position parameter or two; keep this list short!
@@ -401,7 +434,8 @@ http://lists.squid-cache.org/pipermail/squid-dev/2017-February/008045.html
 http://lists.squid-cache.org/pipermail/squid-dev/2017-February/008046.html
 
 
-thumbX: Fewer refresh_pattern lines lead to better performance.
+thumbX{admin-cfg-merge-refresh}: Fewer refresh_pattern lines lead to better
+performance.
 
 For example, replacing
 
@@ -416,49 +450,56 @@ with
 refresh_pattern (a|b) 720 100% 4320
 ```
 
-May improve refresh_pattern application speed (at the expense of less readable
-configuration).
-
+May improve refresh_pattern application speed (at the expense of a less
+readable configuration).
 
 Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2017-February/014502.html
 
 
-thumbX: If list elements have to store their position in their list (for any
-reason), then a performance-sensitive code should use an intrusive list.
+thumbX{arch-ilist}: If list elements have to store their position in their
+list (for any reason), then a performance-sensitive code should use an
+intrusive list.
 
 This rule might be useful when selecting the best type for a container, but it
-is probably too specific to its original context to be generally useful.
-TODO: Remove?
+is probably too specific to its original context to be generally useful. TODO:
+Remove this rule of thumb?
 
 Original Context:
 http://lists.squid-cache.org/pipermail/squid-dev/2017-April/008473.html
 
 
-thumbX: When writing ssl_bump rules, always tell Squid what to do at every
-step by making sure that at least one applicable ssl_bump rule matches at
-every step.
+thumbX{admin-cfg-each-step}: When writing ssl_bump rules, always tell Squid
+what to do at every step
+
+... by making sure that at least one applicable ssl_bump rule matches at every
+step.
 
 
 Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2017-June/015698.html
 
 
-thumbX: When there is an alternative, avoid regular expressions.
+thumbX{admin-cfg-no-regex}: When there is an alternative, avoid regular
+expressions.
 
-Regular expressions are relatively slow and may be difficult to interpret correctly. If you can easily fulfill your requirements with a directive that uses exact string matching (or an equivalent matching without any regular expressions), then go with that directive.
+Regular expressions are relatively slow and may be difficult to interpret
+correctly. If you can easily fulfill your requirements with a directive that
+uses exact string matching (or an equivalent matching without any regular
+expressions), then go with that directive.
 
-On the other hand, avoid replacing one simple regular expression with 1000 exact string matches, of course.
+On the other hand, avoid replacing one simple regular expression with 1000
+exact string matches, of course.
 
-See also: thumbW(Fewer refresh_pattern lines...)
+See also: thumb_ref{admin-cfg-merge-refresh}.
 
 Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2017-September/016453.html
 
 
-thumbX: If you are splicing a domain, then never bump it. If you want to bump
-it, then neither splice it nor allow any other ways to reach it except through
-the bumping proxy.
+thumbX{admin-cfg-bump-hsts}: If you are splicing a domain, then never bump it. If
+you want to bump it, then neither splice it nor allow any other ways to reach
+it except through the bumping proxy.
 
 It is technically possible to transition a domain from being spliced/relayed
 to bumped, but it can be a painful process involving a lot of unavoidable TLS
@@ -469,7 +510,7 @@ Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2017-November/016883.html
 
 
-thumbX: Put boolean data members last.
+thumbX{api-bool-last}: Put boolean data members last.
 
 This rule often reduces padding and might help enable some low-level compiler
 optimizations. The rule is not meant for classes that have only a few
@@ -479,7 +520,8 @@ Original Context:
 http://lists.squid-cache.org/pipermail/squid-dev/2016-January/004680.html
 
 
-thumbX: All `src/` header files should be included using paths relative to `src`.
+thumbX{include-paths}: All `src/` header files should be included using paths
+relative to `src`.
 
 When already in `src/foo/`, writing `#include "f.h"` to include `src/foo/f.h`
 is tempting and will, sometimes, work. However, to improve code search-ability
@@ -494,9 +536,10 @@ For header files located in the `src/` directory itself, do not use any path:
 Original Context: A private review.
 
 
-thumbX: If you want to optimize performance of a disk-caching Squid running on
-beefy hardware, and are ready to spend non-trivial amounts of time/labor/money
-doing that, then consider the following rules:
+thumbX{admin-disk-optim}: If you want to optimize performance of a
+disk-caching Squid running on beefy hardware, and are ready to spend
+non-trivial amounts of time/labor/money doing that, then consider the
+following rules:
 
 1. Use the largest cache_mem your system can handle safely. Please note that,
    without [shared_memory_locking], Squid will not tell you when you
@@ -541,8 +584,10 @@ Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2016-February/009248.html
 
 
-thumbX: When solving reverse proxy caching problems, it is best to fix them
-using proper HTTP mechanisms rather than proxy config workarounds.
+thumbX{admin-cfg-rev-http-rules}: When solving reverse proxy caching problems,
+it is best to fix them using proper HTTP mechanisms
+
+... rather than configuring Squid to violate HTTP.
 
 Using HTTP mechanisms allows all other proxies (and possibly clients) that use
 your reverse proxy to benefit from your fixes.
@@ -551,8 +596,8 @@ Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2016-April/010236.html
 
 
-thumbX: When suspecting a Squid bug, check whether an upgrade resolves the
-issue.
+thumbX{admin-fix-by-upgrade}: When suspecting a Squid bug, check whether an
+upgrade resolves the issue.
 
 This is especially good advice for actively changing areas such as (at the
 time of writing) SslBump.
@@ -561,8 +606,8 @@ Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2016-April/010266.html
 
 
-thumbX: To decide whether to adapt an HTTP message using Squid configuration
-or an adaptation service, consider the following rules:
+thumbX{adapt-where}: To decide whether to adapt an HTTP message using Squid
+configuration or an adaptation service, consider the following rules:
 
 1. Message body mangling belongs to eCAP/ICAP.
 
@@ -576,12 +621,14 @@ or an adaptation service, consider the following rules:
 4. All other mangling actions can be supported directly in squid.conf, at any
    vectoring point.
 
+See also: thumb_ref{adapt-block-by-squid}.
+
 Original Context:
 http://lists.squid-cache.org/pipermail/squid-dev/2016-June/005970.html
 
 
-thumbX: Library-agnostic APIs (e.g., `Security`) must be the same, regardless
-of the library Squid is being compiled with.
+thumbX{api-same-for-each-lib}: Library-agnostic APIs (e.g., `Security`) must
+be the same, regardless of the library Squid is being compiled with.
 
 The implementation of those Library-agnostic APIs may depend on the library,
 of course. For example, it is also perfectly fine for GnuTLS-specific code to
@@ -611,8 +658,8 @@ Original Context:
 http://lists.squid-cache.org/pipermail/squid-dev/2016-June/006015.html
 
 
-thumbX: When running SMP Squid or multiple Squid instances that share
-underlying hardware:
+thumbX{admin-hw-share}: When running SMP Squid or multiple Squid instances
+that share underlying hardware:
 
 1. Ensure that cache_dirs (if any) do not share physical disk spindles. This
    can be tricky in virtualized environments, but failure to do so leads to
@@ -631,16 +678,16 @@ Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2016-August/011765.html
 
 
-thumbX: When testing, check that the changed code was actually exercised.
-Avoid claiming that the PR was tested unless you have verified that the
-changes were exercised during the tests.
+thumbX{test-changes}: When testing, check that the changed code was actually
+exercised. Avoid claiming that the PR was tested unless you have verified that
+the changes were exercised during the tests.
 
 Original Context:
 http://lists.squid-cache.org/pipermail/squid-dev/2016-October/007131.html
 
 
-thumbX: Make everything work, including SslBump, _before_ customizing
-http_access rules.
+thumbX{admin-cfg-access-last}: Make everything work, including SslBump,
+_before_ customizing http_access rules.
 
 "Everything else" is hard enough to get right on its own, even without all the
 common problems related to http_access customizations.
