@@ -89,8 +89,8 @@ Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2019-September/021089.html
 
 
-thumbX{admin-cfg-filter-last}: Rule of thumb: Make everything work, including
-SslBump, _before_ applying custom filtering rules.
+thumbX{admin-cfg-filter-last}: Make everything work, including SslBump,
+_before_ applying custom filtering rules.
 
 Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2019-August/020877.html
@@ -354,21 +354,22 @@ https://github.com/squid-cache/squid/pull/310#discussion_r228557709
 
 
 
-thumbX{admin-which-version}: When selecting the Squid (or OS) version to
-deploy: Start with the latest supported version you can deploy.
+thumbX{admin-which-version}: Start with the latest supported version you can
+deploy.
 
-This rule maximizes the remaining support period, giving your more time before
-the required upgrade.
+When selecting the Squid (or OS) version to deploy, this rule maximizes the
+remaining support period, giving your more time before the required upgrade.
 
 Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2018-October/019572.html
 
 
-thumbX{admin-which-os}: When selecting a Squid deployment operating system: If
-you are already familiar with a particular OS, go with that OS.
+thumbX{admin-which-os}: If you are already familiar with a particular OS, go
+with that OS.
 
-Squid operates well-enough on many modern OSes (excluding Windows), for many
-common applications. This rule flattens the learning curve.
+When selecting a Squid deployment operating system, this rule flattens the
+learning curve. Squid operates well-enough on many modern OSes (excluding
+Windows), for many common applications.
 
 Original Context:
 http://lists.squid-cache.org/pipermail/squid-users/2018-October/019572.html
