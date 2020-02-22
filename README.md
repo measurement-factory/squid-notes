@@ -22,7 +22,7 @@ way.
 ----
 
 * [Review principles](/review.md)
-* [Architectural rules of thumb](/architecture.md)
+* [Rules of thumb](/thumbs.md)
 
 TODO: Also adjust and adopt https://www.contributor-covenant.org/ or
 a similar covenant.
