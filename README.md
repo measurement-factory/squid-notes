@@ -24,6 +24,8 @@ way.
 * [Review principles](/review.md)
 * [Rules of thumb](/thumbs.md)
 * [Error handling](/errors.md)
+* [Connection ownership](/connection.md)
+* [Job callbacks](/callbacks.md)
 
 TODO: Also adjust and adopt https://www.contributor-covenant.org/ or
 a similar covenant.
