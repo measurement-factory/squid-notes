@@ -142,7 +142,8 @@ help defend against (and assume the existence of) misbehaving code.
   stored using Comm::OldConnection, a smart Comm::Connection pointer with an
   std::shared_ptr ownership semantics. Such storage is useful for logging and
   debugging. OldConnection does not provide access to the underlying socket
-  descriptor because the socket has not been opened or has been closed.
+  descriptor because the socket has never been opened or has already been
+  closed.
 
 * Code using FutureConnection, OpenConnection, and OldConnection pointers must
   strictly follow Connection handling principles. We should scrutinize the
@@ -169,10 +170,16 @@ help defend against (and assume the existence of) misbehaving code.
   automatically canceled when the reader is notified about the socket
   readiness (including error-reporting notifications).
 
-* Comm::OpenConnection creation API requires a connection closure handler. The
-  call to the handler is automatically canceled while the owner destroys or
-  clears the corresponding OpenConnection pointer. Thus, the Connection owner
-  must perform any required cleanup before calling Comm::Close().
+* Comm::OpenConnection creation API requires a connection closure handler
+  because a handler is required to keep Connection::fd in sync with Comm.
+
+* Comm::OpenConnection destructor automatically closes the connection (if
+  any). The destructor does not call the closure handler because the open
+  connection pointer is meant to be stored as the owner data member and,
+  hence, the pointer destruction only happens when the pointer owner itself is
+  being destroyed. And if some special code uses a local variable to store
+  OpenConnection, then that code should not care about the closure of that
+  temporary connection.
 
 * Comm::Close(OpenConnection &oc) API closes the given open Connection and
   makes its pointer nil. The OpenConnection closure handler is not called in
@@ -181,5 +188,5 @@ help defend against (and assume the existence of) misbehaving code.
 
 * Code that does not own an open connection, should use comm_close() API to
   close it, triggering the usual cleanup sequence which includes informing the
-  OpenConnection owner about the impeding closure and nullifying owner's
+  OpenConnection owner about the impending closure and nullifying owner's
   OpenConnetion pointer.
