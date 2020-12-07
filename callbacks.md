@@ -60,10 +60,10 @@ developers to write exception-safe helper job startup code.
 * AsyncJob::swanSong() is responsible for async-calling any remaining
   callbacks.
 
-* AsyncJob::swanSong() is guaranteed _not_ to be called before a successful
+* AsyncJob::swanSong() is guaranteed _not_ to be called before a non-throwing
   AsyncJob::Start() return.
 
-* AsyncJob::swanSong() is guaranteed to be called after a successful
+* AsyncJob::swanSong() is guaranteed to be called after a non-throwing
   AsyncJob::Start() return.
 
 * AsyncJob destructing sequence should validate that no callbacks remain
