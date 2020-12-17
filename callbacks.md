@@ -61,7 +61,8 @@ developers to write exception-safe helper job startup code.
   callbacks.
 
 * AsyncJob::swanSong() is guaranteed _not_ to be called before a non-throwing
-  AsyncJob::Start() return.
+  AsyncJob::Start() return. Unfortunately, this may require adding a
+  AsyncJob::started flag.
 
 * AsyncJob::swanSong() is guaranteed to be called after a non-throwing
   AsyncJob::Start() return.
@@ -69,9 +70,6 @@ developers to write exception-safe helper job startup code.
 * AsyncJob destructing sequence should validate that no callbacks remain
   uncalled after a non-throwing AsyncJob::Start() return. This validation can
   probably be automated via asserts in helper-stored callback destructors.
-
-* AsyncJob must prevent swanSong() calls until a non-throwing Start() return.
-  Unfortunately, this may require adding a AsyncJob::started flag.
 
 
 ## Side notes
