@@ -773,12 +773,19 @@ Rule of thumb ID: <a href="#style-cond-close">#style-cond-close</a>
 
 Get into the habit of typing `const` first and removing it later if needed.
 
-Exception: Omit useless `const` in declaration of by-value parameters (e.g.,
-do not say `void f(const int x);`), especially since some compilers may warn
-about it. The same `const` is useful in the corresponding definitions (e.g.,
-do write `void f(const int x) {...}`).
+Exception: Omit useless `const` in function _declarations_ (e.g., do not say
+`void f(const int);`), especially since some compilers may warn about them.
+The same `const` is useful in the corresponding _definitions_ (e.g., do write
+`void f(const int x) {...}`).
 
-Original Context: comment-[299032627](https://github.com/squid-cache/squid/pull/425#discussion_r299032627)@github
+This rule of thumb, including its exception, echoes [C++ ToW #109]: Meaningful
+`const` in Function Declarations.
+
+[C++ ToW #109]:
+  https://abseil.io/tips/109
+
+Original Context:
+comment-[299032627](https://github.com/squid-cache/squid/pull/425#discussion_r299032627)@github
 
 Rule of thumb ID: <a href="#style-const">#style-const</a>
 
@@ -797,6 +804,30 @@ Original Context:
 comment-[277031498](https://github.com/measurement-factory/squid/pull/20#discussion_r277031498)@github
 
 Rule of thumb ID: <a href="#style-end-cmnt">#style-end-cmnt</a>
+
+----
+
+<a name="style-explicit-ctor"></a>Use `explicit` constructors, especially when accepting a single parameter
+----
+
+This is C++ Core Guideline C.46 "By default, declare single-argument
+constructors explicit".
+
+....
+
+Exception: Classes that, by design, should support implicit conversion or
+copy-initialization.
+
+Prior to C++11, `explicit` only made sense for constructors that can accept a
+single parameter. With C++11 bringing list-initialization support, all
+constructors, including default constructors, can be meaningfully explicit.
+
+See also: https://en.cppreference.com/w/cpp/language/explicit and
+https://stackoverflow.com/questions/2836939/purpose-of-explicit-default-constructors
+
+Original Context: comment-[299032627](https://github.com/squid-cache/squid/pull/425#discussion_r299032627)@github
+
+Rule of thumb ID: <a href="#style-explicit-ctor">#style-explicit-ctor</a>
 
 ----
 
