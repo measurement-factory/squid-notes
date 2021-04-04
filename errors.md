@@ -20,7 +20,7 @@ whether to revive the component (i.e. start another component instance to
 replace the killed one). The correct decision depends on whether a restartable
 component is deemed optional or essential.
 
-* When a component was explicitly enabled or added by the admin, and not
+* When a component was explicitly enabled or added by the admin and not
   configured as optional, Squid should assume it is essential (from the admin
   point of view).
 
@@ -189,9 +189,9 @@ If Squid code must use assertions, then each bug would result in a kid
 restart. Historically, for the vast majority of bugs, such harsh bug handling
 strategy would be an overkill! Knowing that, many developers will violate the
 assert-on-bug guidelines or, worse, hesitate adding useful invariant checks to
-avoid discussions like [change request 627407496].
+avoid discussions like [Squid change request 627407496].
 
-[change request 627407496]:
+[Squid change request 627407496]:
   https://github.com/squid-cache/squid/pull/795#pullrequestreview-627407496
   "Can we use Must() instead of assert() for these checks?"
 
@@ -201,14 +201,15 @@ What about the rare bugs that affect the entire kid or even the entire Squid
 instance state? Using assertions for these bugs is not a good idea either
 because doing so would force developers to decide whether a given invariant is
 "local" (throw) or "global" (assert) in nature -- an often impossible choice,
-especially in a low-level code! Moreover, asserting will still not help with
+especially in low-level code! Moreover, asserting will still not help with
 clearing Squid instance-wide state stored in shared memory or on disk. Most
 likely, any rare code entering such sensitive "global" areas would have to set
 up appropriate cleanup routines that will be automatically triggered by the
 propagated exception.
 
+Combined, the above reasoning leads to the following conclusion:
 
-Thus, Squid code should always throw when an invariant is violated.
+* Squid code should throw when an invariant is violated.
 
 ## Invariant checks: Missing API
 
@@ -231,10 +232,10 @@ Thus, we need a new API like the Assert() macro sketched above or we need to
 change Must() to be like Assert() (and then rework some of the current Must()
 callers).
 
-N.B. AFAICT, when Must() was first introduced into the Squid project (Squid
-master commit 774c051), it was meant to be used like Assert(), but it was not
-_implemented_ as such and, hence, developers found it very convenient for
-input validation, expanding its scope.
+Side note: AFAICT, when Must() was first introduced into the Squid project
+(Squid master commit `774c051`), it was meant to be used like Assert(), but it
+was not _implemented_ as such and, hence, developers found it very convenient
+for input validation, expanding its scope.
 
 Today, there are some 900 Must()s in Squid code. The vast majority of Must()s
 are used like Assert(), but their blind conversion to Assert() semantics would
