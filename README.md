@@ -26,6 +26,7 @@ way.
 * [Error handling](/errors.md)
 * [Connection ownership](/connection.md)
 * [Job callbacks](/callbacks.md)
+* [Small project ideas for developers](/todos.md)
 
 TODO: Also adjust and adopt https://www.contributor-covenant.org/ or
 a similar covenant.
